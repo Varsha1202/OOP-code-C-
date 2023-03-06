@@ -1,0 +1,60 @@
+C++ program that uses map associative container to store the populations of states and retrieves them based on user input:
+
+
+#include <iostream>
+#include <map>
+#include <string>
+#include <utility>
+
+using namespace std;
+
+int main()
+{
+    // define a map to store the populations of states
+    
+    typedef map<string, int> mapType;
+    mapType populationMap;
+
+    
+    // insert some key-value pairs into the map
+    
+    populationMap.insert(pair<string, int>("China", 1339));
+    populationMap.insert(pair<string, int>("India", 1187));
+    populationMap.insert(mapType::value_type("US", 310));
+    populationMap.insert(mapType::value_type("Indonesia", 234));
+    populationMap.insert(make_pair("Brasil", 193));
+    populationMap.insert(make_pair("Pakistan", 170));
+
+    // erase the end element using the erase function
+    // because it's an ordered map (by key),
+    // map elements are not in the order of the entry
+    // in this map it's US since it's ordered alphabetically
+    mapType::iterator iter = --populationMap.end();
+    populationMap.erase(iter);
+
+    // output the size of the map
+    cout << "Size of populationMap: " << populationMap.size() << '\n';
+
+    // iterate over the map and output the key-value pairs
+    for (iter = populationMap.begin(); iter != populationMap.end(); ++iter) {
+        cout << iter->first << ": " << iter->second << " million\n";
+    }
+
+    // prompt the user to input a state name
+    cout << "Enter a state name to get its population: ";
+    string state;
+    cin >> state;
+
+    // find the population of the state and output it
+    iter = populationMap.find(state);
+    if (iter != populationMap.end()) {
+        cout << state << "'s population is " << iter->second << " million\n";
+    } else {
+        cout << "State not found in populationMap\n";
+    }
+
+    // clear the entries in the map
+    populationMap.clear();
+
+    return 0;
+}
